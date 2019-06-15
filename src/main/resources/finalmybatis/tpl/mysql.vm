@@ -38,7 +38,7 @@
     </sql>
     
 	<!-- 根据条件查询记录 -->
-    <select id="list" parameterType="com.github.finalmybatis.query.Query"
+    <select id="list" parameterType="com.glinsoft.finalmybatis.query.Query"
 		resultMap="baseResultMap">
 		SELECT 
 			<include refid="baseColumnsList" />
@@ -75,7 +75,7 @@
     </select>
 	
 	<!-- 根据条件查询记录数 -->
-    <select id="getCount" parameterType="com.github.finalmybatis.query.Query"
+    <select id="getCount" parameterType="com.glinsoft.finalmybatis.query.Query"
 		resultType="long">
 		SELECT ${countExpression} FROM `${table.tableName}` t
 		<include refid="common.join" />
@@ -102,7 +102,7 @@
 	</select>
     
     <!-- 根据条件获取单条记录 -->
-    <select id="getByQuery" resultMap="baseResultMap" parameterType="com.github.finalmybatis.query.Query">
+    <select id="getByQuery" resultMap="baseResultMap" parameterType="com.glinsoft.finalmybatis.query.Query">
 		SELECT
 			<include refid="baseColumns" />			
 		FROM `${table.tableName}` t
@@ -313,7 +313,7 @@
     </delete>
     
     <!-- 根据条件删除记录 -->
-    <delete id="deleteByQuery" parameterType="com.github.finalmybatis.query.Query">
+    <delete id="deleteByQuery" parameterType="com.glinsoft.finalmybatis.query.Query">
 		DELETE FROM `${table.tableName}`
 		<include refid="common.where" />
 	</delete>
