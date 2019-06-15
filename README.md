@@ -1,10 +1,20 @@
-查询
+## 引入   
+    ````
+    <dependency>
+        <groupId>com.github.glinsoft</groupId>
+        <artifactId>final-mybatis</artifactId>
+        <version>1.0.6</version>
+    </dependency>
+    
+    ````  
+
+## 查询
 
 
-分页查询
-方式1
+### 分页查询
+#### 方式1
 
-前端传递两个分页参数pageIndex，pageSize
+##### 前端传递两个分页参数pageIndex，pageSize
 ```   
     // http://localhost:8080/page1?pageIndex=1&pageSize=10
     @GetMapping("page1")
@@ -16,9 +26,9 @@
     }
 ```   
 
-方式2
+#### 方式2
 
-PageParam里面封装了pageIndex，pageSize参数
+##### PageParam里面封装了pageIndex，pageSize参数
 ```   
     // http://localhost:8080/page2?pageIndex=1&pageSize=10
     @GetMapping("page2")
@@ -28,9 +38,9 @@ PageParam里面封装了pageIndex，pageSize参数
         return list;
     }
 ```   
-返回结果集和总记录数
+##### 返回结果集和总记录数
 
-方式1和方式2只能查询结果集，通常我们查询还需返回记录总数并返回给前端，final-mybatis的处理方式如下：
+##### 方式1和方式2只能查询结果集，通常我们查询还需返回记录总数并返回给前端，final-mybatis的处理方式如下：
 ```   
 // http://localhost:8080/page3?pageIndex=1&pageSize=10
     @GetMapping("page3")
@@ -47,7 +57,7 @@ PageParam里面封装了pageIndex，pageSize参数
     }
 ```   
 
-final-mybatis提供一种更简洁的方式来处理：
+#### final-mybatis提供一种更简洁的方式来处理：
 
 ```   
 // http://localhost:8080/page4?pageIndex=1&pageSize=10
@@ -58,7 +68,7 @@ final-mybatis提供一种更简洁的方式来处理：
     }
 ```   
 
-PageInfo里面包含了List，total信息，还包含了一些额外信息，完整数据如下：
+#### PageInfo里面包含了List，total信息，还包含了一些额外信息，完整数据如下：
 
 ```   
 {
@@ -78,8 +88,8 @@ PageInfo里面包含了List，total信息，还包含了一些额外信息，完
     "total": 20 // 总记录数
 }
 ```   
-根据参数字段查询
-查询姓名为张三的用户
+##### 根据参数字段查询
+##### 查询姓名为张三的用户
 
 ```     
 // http://localhost:8080/sch?username=张三
@@ -92,7 +102,7 @@ PageInfo里面包含了List，total信息，还包含了一些额外信息，完
     }
 ```   
 
-查询姓名为张三并且拥有的钱大于100块
+##### 查询姓名为张三并且拥有的钱大于100块
 
 ```   
 // http://localhost:8080/sch2?username=张三
@@ -105,7 +115,7 @@ PageInfo里面包含了List，total信息，还包含了一些额外信息，完
     }
 ```   
 
-查询姓名为张三并带分页
+##### 查询姓名为张三并带分页
 
 ```   
 // http://localhost:8080/sch3?username=张三&pageIndex=1&pageSize=5
@@ -118,7 +128,7 @@ PageInfo里面包含了List，total信息，还包含了一些额外信息，完
     }
 ```   
 
-查询钱最多的前三名
+##### 查询钱最多的前三名
 
 ```   
 // http://localhost:8080/sch4
@@ -132,7 +142,7 @@ PageInfo里面包含了List，total信息，还包含了一些额外信息，完
     }
 ```   
 
-将参数放在对象中查询
+##### 将参数放在对象中查询
 
 ```   
 // http://localhost:8080/sch5?username=张三
@@ -145,10 +155,10 @@ PageInfo里面包含了List，total信息，还包含了一些额外信息，完
     }
 ```   
 
-UserParam继承PageSortParam类，表示支持分页和排序查询
-使用普通bean查询
+##### UserParam继承PageSortParam类，表示支持分页和排序查询
+##### 使用普通bean查询
 
-假设有个User类如下
+##### 假设有个User类如下
 
 ```   
 public class User {
@@ -173,7 +183,7 @@ public class User {
 }
 ```   
 
-我们将这个类作为查询参数,那么在springmvc中可以这样写:
+#### 我们将这个类作为查询参数,那么在springmvc中可以这样写:
 
 ```   
 @GetMapping(path="/findUserBean")
@@ -184,27 +194,27 @@ public List<User> findUser(User user) {
 }
 ```   
 
-Query query = Query.build(user);
-这句是将User中的属性转换成对应条件,假设userName的值为"jim",那么会封装成一个条件where user_name='jim'
+##### Query query = Query.build(user);
+##### 这句是将User中的属性转换成对应条件,假设userName的值为"jim",那么会封装成一个条件where user_name='jim'
 
-浏览器输入链接:http://localhost:8080//findUserBean?userName=jim 后台将会执行如下SQL:
+##### 浏览器输入链接:http://localhost:8080//findUserBean?userName=jim 后台将会执行如下SQL:
 
 > SELECT id,user_name FROM user t WHERE t.user_name = ?
 
-?的值为jim
+> ?的值为jim
 
-@Condition注解
+##### @Condition注解
 
-@Condition注解用来强化查询，有了这个注解可以生成各种查询条件。
+##### @Condition注解用来强化查询，有了这个注解可以生成各种查询条件。
 
-@Condition注解有三个属性：
+##### @Condition注解有三个属性：
 
 ```   
     joint：表达式之间的连接符,AND|OR,默认AND
     column：数据库字段名，可选
     operator：连接符枚举，存放了等于、大于、小于等连接符
 ```   
-如果要查询id大于2的用户只需在get方法上加上一个@Condition注解即可:
+##### 如果要查询id大于2的用户只需在get方法上加上一个@Condition注解即可:
 
 ```   
     @Condition(operator=Operator.gt)
@@ -212,14 +222,14 @@ Query query = Query.build(user);
         return this.id;
     }
 ```   
-这样，当id有值时，会封装成一个where id>2的条件
+##### 这样，当id有值时，会封装成一个where id>2的条件
 
-需要注意的是，如果不指定column属性，系统会默认取get方法中属性名，然后转换成数据库字段名。如果需要指定数据库字段名的话，可以使用@Condition的column属性。
+##### 需要注意的是，如果不指定column属性，系统会默认取get方法中属性名，然后转换成数据库字段名。如果需要指定数据库字段名的话，可以使用@Condition的column属性。
 
 >public Integer get++UserName++() { return this.userName; }
 
 
-这种情况下会取下划线部分字段，然后转换成数据库字段名。
+##### 这种情况下会取下划线部分字段，然后转换成数据库字段名。
 
 ```   
     @Condition(column="username") // 显示指定字段名
@@ -228,7 +238,7 @@ Query query = Query.build(user);
     }
 ```   
 
-使用@Condition可以生产更加灵活的条件查询,比如需要查询日期为2017-12-1~2017-12-10日的记录,我们可以这样写:
+##### 使用@Condition可以生产更加灵活的条件查询,比如需要查询日期为2017-12-1~2017-12-10日的记录,我们可以这样写:
 
 ```   
     @Condition(column="add_date",operator=Operator.ge)
@@ -241,24 +251,24 @@ Query query = Query.build(user);
         return this.endDate;
     }
 ```   
-转换成SQL语句:
+##### 转换成SQL语句:
 
 ```   
     t.add_date>='2017-12-1' AND t.add_date<'2017-12-10'
 ```   
-忽略某个值
+##### 忽略某个值
 
 ```   
     @Condition(ignoreValue = "-1")
     private Integer name;
 ```   
-客户端传-1将会被忽略，也可以写多个
+##### 客户端传-1将会被忽略，也可以写多个
 
 ```   
     @Condition(ignoreValue = {"0","-1"}) // 忽略0，-1两个值
 ```   
 
-这个功能配合前端select控件将会非常有用，假设控件内容如下
+##### 这个功能配合前端select控件将会非常有用，假设控件内容如下
 
 ```   
     <select name="name">
@@ -267,10 +277,10 @@ Query query = Query.build(user);
         <option value="2">篮球</option>
     </select>
 ```   
-在-请选择-的情况查询全部内容，此时需要忽略0这个值。
-自定义返回内容
+##### 在-请选择-的情况查询全部内容，此时需要忽略0这个值。
+##### 自定义返回内容
 
-@Condition注解中的handlerClass属性可以指定自定义返回结果
+##### @Condition注解中的handlerClass属性可以指定自定义返回结果
 
 ```   
     /** 备注, 数据库字段：remark */
@@ -278,7 +288,7 @@ Query query = Query.build(user);
     private String remark;
 ```   
 
-指定的类需要实现ConditionValueHandler接口
+##### 指定的类需要实现ConditionValueHandler接口
 
 ```   
     public static class RemarkHander implements ConditionValueHandler {
@@ -288,7 +298,7 @@ Query query = Query.build(user);
         }
     }
 ```   
-这里的示例是在原来的值上加1
+##### 这里的示例是在原来的值上加1
 
 ```   
 
@@ -300,10 +310,11 @@ Query query = Query.build(user);
 ```   
  
 
-如果channelId是""(空字符串)，该字段不会加入到条件当中。
-IN查询
+##### 如果channelId是""(空字符串)，该字段不会加入到条件当中。
 
-假设前端页面传来多个值比如checkbox勾选多个id=[1,2],那么我们在User类里面可以用Integer[]或List来接收.
+##### IN查询
+
+##### 假设前端页面传来多个值比如checkbox勾选多个id=[1,2],那么我们在User类里面可以用Integer[]或List来接收.
 
 ```   
     private Integer[] idArr;
@@ -316,8 +327,9 @@ IN查询
 ```   
 
 
-这样会生成where id IN(1,2)条件。
-排序查询
+##### 这样会生成where id IN(1,2)条件。
+
+#### 排序查询
 
 ```   
     // 根据添加时间倒序
@@ -330,13 +342,13 @@ IN查询
 
 >
 
-多表关联查询
+#### 多表关联查询
 
-多表关联查询使用的地方很多，比如需要关联第二张表，获取第二张表的几个字段，然后返回给前端。
+##### 多表关联查询使用的地方很多，比如需要关联第二张表，获取第二张表的几个字段，然后返回给前端。
 
-final-mybatis的用法如下：
+#### final-mybatis的用法如下：
 
-假如我们需要关联第二张表user_info，筛选出user_info中的城市为杭州的数据。
+##### 假如我们需要关联第二张表user_info，筛选出user_info中的城市为杭州的数据。
 ```   
     Query query = new Query()
             // 左连接查询,主表的alias默认为t
@@ -353,9 +365,9 @@ final-mybatis的用法如下：
 
 ```   
 
-多表关联返回指定字段
+#### 多表关联返回指定字段
 
-有时候不需要全部字段，需要取表1中的几个字段，然后取表2中的几个字段，final-mybatis实现方式如下：
+##### 有时候不需要全部字段，需要取表1中的几个字段，然后取表2中的几个字段，final-mybatis实现方式如下：
 ```   
     Query query = new Query();
     // 左连接查询,主表的alias默认为t
@@ -368,20 +380,20 @@ final-mybatis的用法如下：
     List<UserInfoVo> list = MyBeanUtil.mapListToObjList(mapList, UserInfoVo.class);
 ```   
 
-执行的SQL语句对应如下：
+##### 执行的SQL语句对应如下：
 
 >SELECT t2.user_id as userId , t.username , t2.city
 FROM `t_user` t 
 LEFT JOIN user_info t2 ON t.id = t2.user_id
 
-使用@Select查询
+##### 使用@Select查询
 
-@Select注解是mybatis官方提供的一个功能，fastmybatis可以理解为是官方的一种扩展，因此同样支持此功能。 在Mapper中添加如下代码：
+##### @Select注解是mybatis官方提供的一个功能，fastmybatis可以理解为是官方的一种扩展，因此同样支持此功能。 在Mapper中添加如下代码：
 
 >@Select("select * from t_user where id=#{id}")
 TUser selectById(@Param("id") int id);
 
-编写测试用例
+##### 编写测试用例
 ```   
     @Test
     public void testSelectById() {
@@ -390,26 +402,27 @@ TUser selectById(@Param("id") int id);
         System.out.println(user.getUsername());
     }
 ```   
-对于简单的SQL，可以用这种方式实现。除了@Select之外，还有@Update，@Insert，@Delete，这里就不多做演示了。
-Query类详解
+#### 对于简单的SQL，可以用这种方式实现。除了@Select之外，还有@Update，@Insert，@Delete，这里就不多做演示了。
 
-Query是一个查询参数类，配合Mapper一起使用。
-参数介绍
+##### Query类详解
 
-Query里面封装了一系列查询参数，主要分为以下几类：
+##### Query是一个查询参数类，配合Mapper一起使用。
+##### 参数介绍
+
+##### Query里面封装了一系列查询参数，主要分为以下几类：
 
     分页参数：设置分页
     排序参数：设置排序字段
     条件参数：设置查询条件
     字段参数：可返回指定字段
 
-下面逐个讲解每个参数的用法。
+#### 下面逐个讲解每个参数的用法。
 
 >
 
-分页参数
+##### 分页参数
 
-一般来说分页的使用比较简单，通常是两个参数， pageIndex：当前页索引，pageSize：每页几条数据。 Query类使用page(pageIdnex, pageSize)方法来设置。 假如我们要查询第二页，每页10条数据，代码可以这样写：
+##### 一般来说分页的使用比较简单，通常是两个参数， pageIndex：当前页索引，pageSize：每页几条数据。 Query类使用page(pageIdnex, pageSize)方法来设置。 假如我们要查询第二页，每页10条数据，代码可以这样写：
 ```    
     Query query = new Query();
     query.page(2, 10);
@@ -418,44 +431,44 @@ Query里面封装了一系列查询参数，主要分为以下几类：
 ```    
 
 
-如果要实现不规则分页，可以这样写：
+##### 如果要实现不规则分页，可以这样写：
 
 ````    
     Query query = new Query();
     query.limit(3, 5) // 对应mysql：limit 3,5
 ````    
-排序参数
+##### 排序参数
 
 >orderby(String sortname, Sort sort)
 
-其中sortname为数据库字段，非javaBean属性
+##### 其中sortname为数据库字段，非javaBean属性
 
-orderby(String sortname, Sort sort)则可以指定排序方式，Sort为排序方式枚举 假如要按照添加时间倒序，可以这样写：
+##### orderby(String sortname, Sort sort)则可以指定排序方式，Sort为排序方式枚举 假如要按照添加时间倒序，可以这样写：
 ```   
     Query query = new Query();
     query.orderby("create_time",Sort.DESC);
     mapper.list(query);
 ```   
-添加多个排序字段可以在后面追加：
+##### 添加多个排序字段可以在后面追加：
 
 >query.orderby("create_time",Sort.DESC).orderby("id",Sort.ASC);
 
 >
 
-条件参数
+#### 条件参数
 
-条件参数是用的最多一个，因为在查询中往往需要加入各种条件。 fastmybatis在条件查询上面做了一些封装，这里不做太多讲解，只讲下基本的用法，以后会单独开一篇文章来介绍。感兴趣的同学可以自行查看源码，也不难理解。
+##### 条件参数是用的最多一个，因为在查询中往往需要加入各种条件。 fastmybatis在条件查询上面做了一些封装，这里不做太多讲解，只讲下基本的用法，以后会单独开一篇文章来介绍。感兴趣的同学可以自行查看源码，也不难理解。
 
-条件参数使用非常简单，Query对象封装一系列常用条件查询。
+##### 条件参数使用非常简单，Query对象封装一系列常用条件查询。
 
-等值查询eq(String columnName, Object value)，columnName为数据库字段名，value为查询的值 假设我们要查询姓名为张三的用户，可以这样写：
+##### 等值查询eq(String columnName, Object value)，columnName为数据库字段名，value为查询的值 假设我们要查询姓名为张三的用户，可以这样写：
 
 ````    
     Query query = new Query();
     query.eq("username","张三");
     List<User> list = mapper.list(query);
 ````    
-通过方法名即可知道eq表示等于'='，同理lt表示小于<,gt表示大于>
+#### 通过方法名即可知道eq表示等于'='，同理lt表示小于<,gt表示大于>
 
 | 查询方式  | 说明 |
 | :--- | :--- |
@@ -473,9 +486,9 @@ orderby(String sortname, Sort sort)则可以指定排序方式，Sort为排序�
 | notEmpty | 	字段不为空，非NULL且有内容 |
 | isEmpty | 	字段为NULL或者为'' |
 
-如果上述方法还不能满足查询需求的话，我们可以使用自定sql的方式来编写查询条件，方法为：
+##### 如果上述方法还不能满足查询需求的话，我们可以使用自定sql的方式来编写查询条件，方法为：
 ````    
     Query query = new Query();
     query.sql(" username='Jim' OR username='Tom'");
 ````    
-注意：sql()方法不会处理sql注入问题，因此尽量少用。
+##### 注意：sql()方法不会处理sql注入问题，因此尽量少用。
