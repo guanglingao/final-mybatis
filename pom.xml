@@ -175,24 +175,24 @@
 
 	<distributionManagement>
 		<repository>
-			<id>sonatype-nexus-snapshots</id>
-			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
+			<id>sonatype-nexus-staging</id>
+			<url>https://oss.sonatype.org/service/local/staging/deploy/maven2/</url>
 		</repository>
 		<snapshotRepository>
-			<id>sonatype-nexus-staging</id>
-			<url>https://oss.sonatype.org/content/repositories/staging/</url>
+			<id>sonatype-nexus-snapshots</id>
+			<url>https://oss.sonatype.org/content/repositories/snapshots/</url>
 		</snapshotRepository>
 	</distributionManagement>
 	<scm>
-		<url>https://github.com/glinsoft/thetis-cache</url>
-		<connection>https://github.com/glinsoft/thetis-cache.git</connection>
-		<developerConnection>https://github.com/glinsoft/thetis-cache</developerConnection>
+		<url>https://github.com/glinsoft/final-mybatis</url>
+		<connection>https://github.com/glinsoft/final-mybatis.git</connection>
+		<developerConnection>https://github.com/glinsoft/final-mybatis</developerConnection>
 	</scm>
 	<developers>
 		<developer>
 			<name>高广林</name>
 			<email>guanglingao@yeah.net</email>
-			<url>https://github.com/glinsoft/thetis-cache</url>
+			<url>https://github.com/glinsoft/final-mybatis</url>
 		</developer>
 	</developers>
 
