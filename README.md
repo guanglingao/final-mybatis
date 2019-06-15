@@ -1,12 +1,12 @@
 ## 引入   
-    ````
-    <dependency>
-        <groupId>com.github.glinsoft</groupId>
-        <artifactId>final-mybatis</artifactId>
-        <version>1.0.6</version>
-    </dependency>
-    
-    ````  
+````
+<dependency>
+    <groupId>com.github.glinsoft</groupId>
+    <artifactId>final-mybatis</artifactId>
+    <version>1.0.6</version>
+</dependency>
+
+````  
 
 ## 查询
 
