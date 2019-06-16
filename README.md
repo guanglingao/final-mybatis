@@ -1,6 +1,6 @@
 ## 支持的数据库
 
-#### MySQL 、 Postgre 、 SQLServer 
+#### MySQL 、 Postgre 、 MS-SQLServer 
 
 ## 引入   
 ````
