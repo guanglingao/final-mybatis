@@ -2,7 +2,6 @@ package com.glinsoft.finalmybatis.ext;
 
 import static org.springframework.util.Assert.notNull;
 
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.SQLException;
@@ -44,7 +43,7 @@ public class SqlSessionFactoryBeanExt extends SqlSessionFactoryBean {
 	}
 	
 	@Override
-	protected SqlSessionFactory buildSqlSessionFactory() throws IOException {
+	protected SqlSessionFactory buildSqlSessionFactory() throws Exception {
 		notNull(this.basePackage, "属性 'basePackage' 必填");
 		
 		Resource[] allMapperLocations = mapperLocationsBuilder.build(this.basePackage);
@@ -77,7 +76,7 @@ public class SqlSessionFactoryBeanExt extends SqlSessionFactoryBean {
 			conn = dataSource.getConnection();
 			DatabaseMetaData metaData = conn.getMetaData();
 			String dbName = metaData.getDatabaseProductName();
-			LOG.info("数据库名称：" + dbName);
+			LOG.debug("数据库名称：" + dbName);
 			return dbName;
 		} catch (Exception e) {
 			LOG.error(e.getMessage(), e);

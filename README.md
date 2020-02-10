@@ -1,13 +1,13 @@
 ## 支持的数据库
 
-#### MySQL 、 Postgre 、 MS-SQLServer 
+#### MySQL 、 Postgre 、 MS-SQLServer ; 自1.1.0始，支持Java8的日期类型
 
 ## 引入   
 ````
 <dependency>
-    <groupId>com.github.glinsoft</groupId>
+    <groupId>com.encdata</groupId>
     <artifactId>final-mybatis</artifactId>
-    <version>1.0.6</version>
+    <version>1.1.0</version>
 </dependency>
 
 ````  

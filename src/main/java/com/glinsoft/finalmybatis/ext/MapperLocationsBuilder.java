@@ -128,7 +128,7 @@ public class MapperLocationsBuilder {
 		}
 		final String templateLocation = this.buildTemplateLocation(this.getDbName());
 		final String globalVmLocation = this.config.getGlobalVmLocation();
-		LOG.info("使用模板:" + templateLocation);
+		LOG.debug("使用模板:" + templateLocation);
 		final ClassClient codeClient = new ClassClient(config);
 		final List<Resource> mapperLocations = new ArrayList<Resource>(classCount);
 
@@ -141,7 +141,7 @@ public class MapperLocationsBuilder {
 			}
 
 			long endTime = System.currentTimeMillis();
-			LOG.info("生成Mapper内容总耗时：" + (endTime - startTime) / 1000.0 + "秒");
+			LOG.debug("生成Mapper内容总耗时：" + (endTime - startTime) / 1000.0 + "秒");
 
 			this.saveMapper(config.getMapperSaveDir(), mapperLocations);
 

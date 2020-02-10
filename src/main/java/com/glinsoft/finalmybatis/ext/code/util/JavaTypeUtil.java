@@ -34,12 +34,11 @@ public class JavaTypeUtil {
 		addJavaType("long"		, "Long"		, "BIGINT");
 		addJavaType("float"		, "Float"		, "FLOAT");
 		addJavaType("double"	, "Double"		, "DOUBLE");
-		
 		addJavaType("byte[]"	, "Byte[]"		, "BINARY");
-		
 		addJavaType("String"	, "String"		, "VARCHAR");
 		addJavaType("Date"		, "Date"		, "TIMESTAMP");
-		addJavaType("Time"		, "Time"		, "TIMESTAMP");
+		addJavaType("LocalDate"		, "LocalDate"		, "TIMESTAMP");
+		addJavaType("LocalDateTime"		, "LocalDateTime"		, "TIMESTAMP");
 		addJavaType("Timestamp"	, "Timestamp"	, "TIMESTAMP");
 		addJavaType("BigDecimal", "BigDecimal"	, "DECIMAL");
 		addJavaType("Clob"		, "Clob"		, "CLOB");
